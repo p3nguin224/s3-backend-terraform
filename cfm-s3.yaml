@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Create backend s3 before initailizing terraform"
+# Resources section
+Resources:
+  terraformBackendBucket: 
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "terraform-backend-bucket"
+      BucketNamePrefix: dev
+      Tags: 
+        - Key: "Environment"
+          Value: "dev-Env"
+        - Key: "Region"
+          Value: ap-northeast-1
+
+      VersioningConfiguration: 
+        Status: Enabled
+
