@@ -12,3 +12,11 @@ output "dev_network_id" {
   }
 
 }
+
+output "EC2-Values" {
+  value = {
+    "Bastion Host Public IP"    = aws_instance.dev-bastion-EC2.public_ip,
+    "Bastion Host Private IP"   = aws_instance.dev-bastion-EC2.private_ip,
+    "Private Server Private IP" = aws_instance.dev-private-EC2.private_ip
+  }
+}
