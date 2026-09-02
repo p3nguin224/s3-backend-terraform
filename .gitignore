@@ -8,3 +8,8 @@
 
 # Logs
 *.log
+
+# Keys
+*.pem
+*.key
+*.env
