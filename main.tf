@@ -82,28 +82,67 @@ resource "aws_nat_gateway" "dev-NAT-GW" {
 }
 
 
-# ROUTE TABLE CREATE
-# resource "aws_route_table" "dev-public-subnet-routeTable" {
-#   vpc_id = aws_vpc.dev-VCP-tokyo
+# PUBLIC ROUTE TABLE CREATE
+resource "aws_route_table" "dev-public-subnet-routeTable" {
+  vpc_id = aws_vpc.dev-VCP-tokyo.id
 
-#   route {
-#     cidr_block           = "0.0.0.0/0"
-#     network_interface_id = aws_network_interface.test.id
-#   }
-#   tags = {
-#     Name        = "dev-public-subnet-routeTable"
-#     Environment = "dev"
-#     Region      = "tokyo"
-#   }
+  tags = {
+    Name        = "dev-public-subnet-routeTable"
+    Environment = "dev"
+    Region      = "tokyo"
+  }
+}
+
+resource "aws_route" "dev-public-subnet-routeTable-internetRoute" {
+  route_table_id         = aws_route_table.dev-public-subnet-routeTable.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.dev-IGW.id
+}
+
+# resource "aws_route" "dev-public-subnet-routeTable-localRoute" {
+#   route_table_id         = aws_route_table.dev-public-subnet-routeTable.id
+#   destination_cidr_block = "10.0.0.0/16"
+#   gateway_id             = "local"
 # }
 
+## Public Route Table Association
+resource "aws_route_table_association" "dev-public-subnetA-routeTable-Associate" {
+  subnet_id      = aws_subnet.dev-public-subnet-A.id
+  route_table_id = aws_route_table.dev-public-subnet-routeTable.id
+}
 
-# data "aws_route_tables" "dev-private-subnet-routeTable" {
-#   vpc_id = aws_vpc.dev-VCP-tokyo
+resource "aws_route_table_association" "dev-public-subnetC-routeTable-Associate" {
+  subnet_id      = aws_subnet.dev-public-subnet-C.id
+  route_table_id = aws_route_table.dev-public-subnet-routeTable.id
+}
 
-#   tags = {
-#     Name        = "dev-private-subnet-routeTable"
-#     Environment = "dev"
-#     Region      = "tokyo"
-#   }
+
+
+# PRIVATE ROUTE TABLE CREATE
+resource "aws_route_table" "dev-private-subnet-routeTable" {
+  vpc_id = aws_vpc.dev-VCP-tokyo.id
+
+  tags = {
+    Name        = "dev-private-subnet-routeTable"
+    Environment = "dev"
+    Region      = "tokyo"
+  }
+}
+
+resource "aws_route" "dev-private-subnet-routeTable-internetRoute" {
+  route_table_id         = aws_route_table.dev-private-subnet-routeTable.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.dev-NAT-GW.id
+}
+
+# resource "aws_route" "dev-private-subnet-routeTable-localRoute" {
+#   route_table_id         = aws_route_table.dev-private-subnet-routeTable.id
+#   destination_cidr_block = "10.0.0.0/16"
+#   gateway_id             = "local"
 # }
+
+## Private Route Table Association
+resource "aws_route_table_association" "dev-private-subnetA-routeTable-Associate" {
+  subnet_id      = aws_subnet.dev-private-subnet-A.id
+  route_table_id = aws_route_table.dev-private-subnet-routeTable.id
+}
