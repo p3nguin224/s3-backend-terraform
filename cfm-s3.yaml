@@ -5,8 +5,7 @@ Resources:
   terraformBackendBucket: 
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "terraform-backend-bucket"
-      BucketNamePrefix: dev
+      BucketName: "thaw-terraform-backend-bucket"
       Tags: 
         - Key: "Environment"
           Value: "dev-Env"
