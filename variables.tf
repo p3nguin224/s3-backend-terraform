@@ -1,20 +1,24 @@
 variable "aws_config_files" {
-  type    = list(string)
-  default = ["~/.aws/config"]
+  description = "AWS config file path"
+  type        = list(string)
+  default     = ["~/.aws/config"]
 }
 
 variable "aws_credentials_files" {
-  type    = list(string)
-  default = ["~/.aws/credentials"]
+  description = "AWS credentials file path"
+  type        = list(string)
+  default     = ["~/.aws/credentials"]
 }
 
 variable "aws_profile" {
-  type = string
+  description = "AWS profile name"
+  type        = string
 }
 
 variable "aws_region" {
-  type    = string
-  default = "ap-northeast-1"
+  description = "AWS region. Default is ap-northeast-1."
+  type        = string
+  default     = "ap-northeast-1"
 }
 
 variable "aws_ec2_keypairname" {
