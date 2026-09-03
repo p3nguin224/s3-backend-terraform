@@ -1,10 +1,10 @@
 resource "aws_vpc" "dev-VCP-tokyo" {
-  cidr_block = "10.0.0.0/16"
-  region     = "ap-northeast-1"
+  cidr_block = var.vpc_cidr_block
+  region     = var.aws_region
 
   tags = {
     Name        = "dev-VCP-tokyo"
-    Environment = "dev"
+    Environment = var.evnironment_name
     Region      = "tokyo"
   }
 }

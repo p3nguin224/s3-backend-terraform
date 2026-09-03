@@ -5,7 +5,7 @@ resource "aws_route_table" "dev-public-subnet-routeTable" {
 
   tags = {
     Name        = "dev-public-subnet-routeTable"
-    Environment = "dev"
+    Environment = var.evnironment_name
     Region      = "tokyo"
   }
 }
@@ -37,7 +37,7 @@ resource "aws_route_table" "dev-private-subnet-routeTable" {
 
   tags = {
     Name        = "dev-private-subnet-routeTable"
-    Environment = "dev"
+    Environment = var.evnironment_name
     Region      = "tokyo"
   }
 }

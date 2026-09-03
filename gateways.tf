@@ -2,7 +2,7 @@
 resource "aws_eip" "dev-NAT-GW-EIP" {
   tags = {
     Name        = "dev-NAT-GW-EIP"
-    Environment = "dev"
+    Environment = var.evnironment_name
     Region      = "tokyo"
   }
 }
@@ -13,7 +13,7 @@ resource "aws_internet_gateway" "dev-IGW" {
 
   tags = {
     Name        = "dev-IGW"
-    Environment = "dev"
+    Environment = var.evnironment_name
     Region      = "tokyo"
   }
 }
@@ -24,7 +24,7 @@ resource "aws_nat_gateway" "dev-NAT-GW" {
   subnet_id     = aws_subnet.dev-public-subnet-C.id
 
   tags = {
-    Name = "gw NAT"
+    Name = "NAT GW ${var.evnironment_name}"
   }
 
   # To ensure proper ordering, it is recommended to add an explicit dependency
